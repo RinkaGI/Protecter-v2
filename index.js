@@ -1,67 +1,33 @@
-const { Client, Partials, Collection, GatewayIntentBits } = require('discord.js');
-const config = require('./config/config');
-const colors = require("colors");
-
-// Creating a new client:
+const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildPresences,
-    GatewayIntentBits.GuildMessageReactions,
-    GatewayIntentBits.DirectMessages,
-    GatewayIntentBits.MessageContent
-  ],
-  partials: [
-    Partials.Channel,
-    Partials.Message,
-    Partials.User,
-    Partials.GuildMember,
-    Partials.Reaction
-  ],
-  presence: {
-    activities: [{
-      name: "Protegiendo tu servidor!",
-      type: 0
-    }],
-    status: 'dnd'
-  }
+	intents: [
+		GatewayIntentBits.Guilds, 
+		GatewayIntentBits.GuildMessages, 
+		GatewayIntentBits.GuildPresences, 
+		GatewayIntentBits.GuildMessageReactions, 
+		GatewayIntentBits.DirectMessages,
+		GatewayIntentBits.MessageContent
+	], 
+	partials: [Partials.Channel, Partials.Message, Partials.User, Partials.GuildMember, Partials.Reaction] 
 });
 
-// Host the bot:
-require('http').createServer((req, res) => res.end('Ready.')).listen(3000);
+const config = require('./config.json');
+require('dotenv').config() // remove this line if you are using replit
 
-// Getting the bot token:
-const AuthenticationToken = process.env.TOKEN || config.Client.TOKEN;
-if (!AuthenticationToken) {
-  console.warn("[CRASH] El token de autenticación es requerida para ejecutarse.".red)
-  return process.exit();
-};
+const fs = require('fs')
 
-// Handler:
-client.prefix_commands = new Collection();
-client.slash_commands = new Collection();
-client.user_commands = new Collection();
-client.message_commands = new Collection();
-client.modals = new Collection();
-client.events = new Collection();
+client.commands = new Collection()
+client.aliases = new Collection()
+client.slashCommands = new Collection();
+client.buttons = new Collection();
+client.prefix = config.prefix;
 
 module.exports = client;
 
-["application_commands", "modals", "events", "mongoose"].forEach((file) => {
-  require(`./handlers/${file}`)(client, config);
+
+fs.readdirSync('./handlers').forEach((handler) => {
+  require(`./handlers/${handler}`)(client)
 });
 
-// Login to the bot:
-client.login(AuthenticationToken)
-  .catch((err) => {
-    console.error("[CRASH] Algo ha salido mal mientras se ejecutaba el bot...");
-    console.error("[CRASH] Error de la API de Discord:" + err);
-    return process.exit();
-  });
 
-// Handle errors:
-process.on('unhandledRejection', async (err, promise) => {
-  console.error(`[ANTI-CRASH] Unhandled Rejection: ${err}`.red);
-  console.error(promise);
-});
+client.login(process.env.TOKEN)
