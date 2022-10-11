@@ -41,12 +41,12 @@ module.exports = {
 
         const embed1 = new EmbedBuilder()
             .setTitle(':x: Problema al limpiar el canal :x:')
-            .setDescription("Tu petición de mensajes ha superado el 99, ese número no es compatible con Discord.")
+            .setDescription("<:flecha:1027368636572237915> Tu petición de mensajes ha superado el 99, ese número no es compatible con Discord.")
             .setColor(0x5A9EC9)
             .addFields(
                 {
                     name: 'Sugerencia para arreglar',
-                    value: '>> Usar un número menor \n `mensajes: 90`'
+                    value: '<:flecha:1027368636572237915> Usar un número menor \n `mensajes: 90`'
                 }
             )
             .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
@@ -60,7 +60,7 @@ module.exports = {
             .addFields(
                 {
                     name: 'Información de la limpieza:',
-                    value: `**Razón:** ${Reason}`
+                    value: `<:flecha:1027368636572237915> **Razón:** ${Reason}`
                 }
             )
             .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
@@ -81,7 +81,7 @@ module.exports = {
                 .addFields(
                     {
                         name: 'Información de la limpieza:',
-                        value: `**Usuario:** ${Target.user.username} \n **Tag:** ${Target.user.discriminator} \n **ID:** ${Target.id} \n **Razón:** ${Reason}`
+                        value: `<:flecha:1027368636572237915> **Usuario:** ${Target.user.username} \n <:flecha:1027368636572237915> **Tag:** ${Target.user.discriminator} \n <:flecha:1027368636572237915> **ID:** ${Target.id} \n <:flecha:1027368636572237915> **Razón:** ${Reason}`
                     }
                 )
                 .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})

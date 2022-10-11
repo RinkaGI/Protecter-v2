@@ -46,11 +46,9 @@ module.exports = {
         const Reason = interaction.options.getString("razon");
         const AmountStr = interaction.options.getString("mensajes");
 
-        console.log(Target)
-
         const embed1 = new EmbedBuilder()
             .setTitle("> :x: Problema al banear :x:")
-            .setDescription(`Al parecer, admin, no puedes banearte a ti mismo.`)
+            .setDescription(`<:flecha:1027368636572237915> Al parecer, admin, no puedes banearte a ti mismo.`)
             .setColor(0x5A9EC9)
             .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
             .setFooter({text: "Protecter v2 | ¡Lo mejor para tu seguridad!"})
@@ -65,7 +63,7 @@ module.exports = {
 
         const embed2 = new EmbedBuilder()
             .setTitle("> :x: Problema al banear :x:")
-            .setDescription(`Al parecer, admin, no puedes banearme.`)
+            .setDescription(`<:flecha:1027368636572237915> Al parecer, admin, no puedes banearme.`)
             .setColor(0x5A9EC9)
             .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
             .setFooter({text: "Protecter v2 | ¡Lo mejor para tu seguridad!"})
@@ -78,7 +76,7 @@ module.exports = {
 
         const embed3 = new EmbedBuilder()
             .setTitle("> :x: Problema al banear :x:")
-            .setDescription(`¡No se puede banear a un admin!`)
+            .setDescription(`<:flecha:1027368636572237915> ¡No se puede banear a un admin!`)
             .setColor(0x5A9EC9)
             .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
             .setFooter({text: "Protecter v2 | ¡Lo mejor para tu seguridad!"})
@@ -91,7 +89,7 @@ module.exports = {
 
         const embed4 = new EmbedBuilder()
             .setTitle("> :x: Problema al banear :x:")
-            .setDescription(`La razón no puede superar los 512 carácteres.`)
+            .setDescription(`<:flecha:1027368636572237915> La razón no puede superar los 512 carácteres.`)
             .setColor(0x5A9EC9)
             .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
             .setFooter({text: "Protecter v2 | ¡Lo mejor para tu seguridad!"})
@@ -105,14 +103,14 @@ module.exports = {
             .setTitle("> :white_check_mark: ¡Se ha baneado exitosamente!")
             .addFields(
                 {
-                    name: ">> Usuario",
-                    value: `**Nombre:** ${String(Target.user.username)} \n **Tag:** ${Target.user.discriminator} \n **ID:** ${Target.id}`,
+                    name: "Usuario",
+                    value: `<:flecha:1027368636572237915> **Nombre:** ${String(Target.user.username)} \n <:flecha:1027368636572237915> **Tag:** ${Target.user.discriminator} \n <:flecha:1027368636572237915> **ID:** ${Target.id}`,
                     inline: false
                 },
 
                 {
-                    name: '>> Información del baneo',
-                    value: `**Razón:** ${Reason} \n **Mensajes borrados desde los últimos:** ${AmountStr} días.`,
+                    name: 'Información del baneo',
+                    value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Mensajes borrados desde los últimos:** ${AmountStr} días.`,
                     inline: false
                 }
             )
@@ -125,17 +123,17 @@ module.exports = {
 
         const embed6 = new EmbedBuilder()
             .setTitle("> :x: ¡Has sido baneado!")
-            .setDescription(`¡Has sido baneado del servidor ${interaction.guild.name}!`)
+            .setDescription(`<:flecha:1027368636572237915> ¡Has sido baneado del servidor ${interaction.guild.name}!`)
             .addFields(
                 {
                     name: "**Usuario**",
-                    value: `**Nombre:** ${Target.user.username} \n **Discriminador:** ${String(Target.user.discriminator)} \n **Nombre completo:** ${String(Target.user.username) + String(Target.user.discriminator)} \n **ID:** ${Target.user.id}`,
+                    value: `<:flecha:1027368636572237915> **Nombre:** ${Target.user.username} \n <:flecha:1027368636572237915> **Discriminador:** ${String(Target.user.discriminator)} \n <:flecha:1027368636572237915> **ID:** ${Target.user.id}`,
                     inline: true
                 },
 
                 {
                     name: '**Información del baneo:**',
-                    value: `**Razón:** ${Reason} \n **Mensajes borrados desde los últimos:** ${AmountStr} días.`,
+                    value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Mensajes borrados desde los últimos:** ${AmountStr} días.`,
                     inline: true
                 }
             )

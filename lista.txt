@@ -1,0 +1,68 @@
+**COMANDOS DE MODERACIÓN:**
+```
+  • ban                  (✅)
+  • clear                (✅)
+  • kick                 (✅)
+  • mute                 (✅)
+  • nuke                 (✅)
+  • warnEdit             (❌)
+  • removeWarn           (❌)
+  • tempBan              (❌)
+  • unBan                (❌)
+  • unBanAll             (❌)
+  • unMute               (❌)
+  • warn                 (✅)
+  • history              (❌)
+```
+
+**COMANDOS PRIVADOS:**
+```
+  • addBlackList         (❌)
+  • addStaff             (❌)
+  • audit-logs           (❌)
+  • embed                (❌)
+  • eval                 (❌)
+  • gen                  (❌)
+  • removeStaff          (❌)
+  • ticket-system        (❌)
+```
+
+**COMANDOS DE UTILIDAD:**
+```
+  • bot                  (❌)
+  • checkPerms           (❌)
+  • commands             (❌)
+  • malicious            (❌)
+  • help                 (❌)
+  • invite               (❌)
+  • userInfo             (❌)
+  • ping                 (❌)
+  • premium              (❌)
+  • purgeMe              (❌)
+  • report               (❌)
+  • status               (❌)
+  • verify               (❌)
+```
+
+**COMANDOS DE CONFIGURACIÓN:**
+```
+  • setPrefix            (❌)
+  • setLang              (❌)
+  • setChannelLogs       (❌)
+  • setMuteRol           (❌)
+```
+
+**SISTEMAS:**
+```
+  • AntiSpam             (❌)
+  • AntiRaid             (❌)
+  • Logs                 (❌)
+  • AntiBots             (❌)
+  • RaidLogs             (❌)
+  • AntiWords            (❌)
+  • AutoMod              (❌)
+```
+
+(❌) -> No programado (No iniciado).
+(🟡) -> No terminado (A medias).
+(✅) -> Terminado (Todo listo).
