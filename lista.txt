@@ -5,8 +5,8 @@
   • kick                 (✅)
   • mute                 (✅)
   • nuke                 (✅)
-  • warnEdit             (❌)
-  • removeWarn           (❌)
+  • warnEdit             (✅)
+  • removeWarn           (✅)
   • tempBan              (❌)
   • unBan                (❌)
   • unBanAll             (❌)
@@ -65,4 +65,59 @@
 
 (❌) -> No programado (No iniciado).
 (🟡) -> No terminado (A medias).
+(🟡) -> Falta prefix (A medias).
 (✅) -> Terminado (Todo listo).
+
+- Verificar las funciones PREMIUM y que solo están disponibles para los PREMIUM.
+- Terminar las Backup.
+- Intentar terminar el sistema de las insignias.
+- Terminar el comando stats.
+- Terminar el p!user.
+- Intentar que estén disponibles para los PREMIUM las backups con guardados de 100 mensajes por canal.
+- Terminar el sistema AntiLink y ponerlo al publico.
+- El AntiRaid.
+- Dejar el PREMIUM listo y en completo funcionamiento.
+- Habilitar el comando p!clear que pueda borrar los mensajes que están por encima después de los 14 días.
+- Intentar hacer lo de la verificación para los PREMIUM
+
+- Terminar el comando stats.
+- Intentar acabar el sistema de las insignias.
+- Acabar el sistema de p!user.
+- Quiero que trabajes en los logs, verificar que funcionan perfectamente y mejorarlos para los PREMIUM, a esto me refiero a darles varias posibilidades de los logs, tipo si quieres que te lleguen alertas de roles asignados, etc... Eso para los PREMIUM pero los normales tendrán también este sistema en 1 solo tendrán todos los logs sin posibilidad de elegir cual no querer y cual si.
+- Hay que crear un comando para dar roles a todos los miembros o quitar roles a todos los miembros me explico? Ej: p!addrole all @👥┃Protecter User (O p!addrole allbot @bot ¿Entiendes?)
+
+- Quiero que trabajes en un comando donde se informa todo lo relacionado con el premium y opciones de compras.
+- Quiero que trabajes en los RAID Logs.
+- Quiero que mejores el embed de las actualizaciones.
+- Quiero Hay errores con los emojis del bot. Eres mi mejor fix que tengo suerte! Es broma, pero si le puedes echar un vistazo te lo agradecería.
+- Hay que mejorar los mensajes no dan ganas de leerlos, intenta que los usuarios quieran leerlos y no se mueran en el intento.
+- Hay faltas tantos ortográficas como de desarrollo en el menú de help.
+- Hay que verificar que funciona el p!unban.
+
+- Hay que hacer una sistema de sugerencias para el PREMIUM del bot unión, no quiero algo básico si no algo que cuando lo usen se queden flipando.
+- Hay que actualizar la lista de los comandos.
+- Hay que anunciar que el AntiLink funciona si es que funciona claro!
+- Hay que hacer el sistema AntiRaid de una vez, vuelvo a repetir que un bot sin sistema AntiRaid no es un bot de seguridad.
+- Hay que decorar el Bot para Halloween 🎃
+
+- Hay que arreglar del todo el problema de los emojis en Protecter.
+- Hay que actualizar la lista de comandos.
+- Hacer el sistema de backup con copia de mensajes para Protecter Normal de 50 mensajes por canal y 100 mensajes por canales para el PREMIUM.
+
+- Avatar
+- Mail.
+- RoleInfo.
+- Mejorar el comando ServerInfo.
+- Comando para ensordecer.
+- Comando para mostrar la lista de sanciones que tienes en un servidor vía MENU, comando para mostrar las sanciones que tienes en todos los servidores donde esta Protecter vía Menu.
+- Sistema de Sugerencia.
+- Eliminar Rol.
+- Comando para actualizar roles. (/addrole (all, bots, user, etc...) (@rol) 
+- Comando clearbans.
+- Comando vía menu para ver las configuraciones del bot en un servidor.
+
+- Sistema de Sugerencia Mejorado.
+- Generador de contraseñas.
+- Sistema de verificación por captcha.
+- Configurar un sistema de configuración sencilla y rápida vía menu.
+- Configurar un comando para configurar los sistemas del bot automáticamente.

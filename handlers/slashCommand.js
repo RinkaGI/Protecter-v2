@@ -50,6 +50,10 @@ module.exports = (client) => {
 					{ body: slashCommands }
 				);
 				console.log(chalk.yellow('Slash Commands • Registered'))
+
+				// rest.put(Routes.applicationCommands(process.env.CLIENT_ID), { body: [] })
+				// .then(() => console.log('Successfully deleted all application commands.'))
+				// .catch(console.error);
 			} catch (error) {
 				console.log(error);
 			}

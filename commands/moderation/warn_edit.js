@@ -2,33 +2,17 @@ const { ApplicationCommandOptionType, EmbedBuilder, PermissionsBitField } = requ
 const db = require('../../database');
 
 module.exports = {
-    name: 'warns_edit',
-    description: '¡Cambia el número de avisos de una persona! Si es mayor de 3 será baneado.',
+    name: 'warn_edit',
+    description: '¡Cambia el numero de avisos de una persona!',
     cooldown: 1000,
-    default_member_permissions: 'BanMembers',
+    userPerms: ['BanMembers'],
+    botPerms: ['BanMembers'],
 
-    options: [
-        {
-            name: 'usuario', description: '¿A quién quieres editar sus avisos?',
-            type: ApplicationCommandOptionType.User, required: true
-        },
-
-        {
-            name: 'cantidad', description: '¿A cuántos warns se los quieres cambiar?',
-            type: ApplicationCommandOptionType.Integer, required: true
-        },
-
-        {
-            name: 'razón', description: '¿Por qué se los cambias?',
-            type: ApplicationCommandOptionType.String, required: false
-        }
-    ],
-
-    run: async (client, interaction) => {
-        const Target = interaction.options.getMember('usuario');
-        const Reason = interaction.options.getString('razón') || 'Ninguna razón añadida'
-        const Amount = interaction.options.getInteger('cantidad');
-
+    run: async (client, message, args) => {
+        const Target = message.mentions.members.first();
+        const Amount = args[1];
+        const Reason = args.slice(2).join(' ') || 'Ninguna razón fue añadida'
+        
         const embed1 = new EmbedBuilder()
             .setTitle("> :x: Problema al editar los avisos :x:")
             .setDescription(`<:flecha:1027368636572237915> Al parecer, admin, no puedes cambiar tus propios avisos.`)
@@ -38,7 +22,7 @@ module.exports = {
             .setTimestamp(new Date())
             .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
 
-        if (Target.id == interaction.member.id) return interaction.reply({embeds: [embed1]})
+        if (Target.id == message.author.id) return message.reply({embeds: [embed1]})
 
         const embed2 = new EmbedBuilder()
         .setTitle("> :x: Problema al cambiar los avisos :x:")
@@ -49,7 +33,7 @@ module.exports = {
         .setTimestamp(new Date())
         .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
     
-        if (Target.id == process.env.CLIENT_ID) return interaction.reply({embeds: [embed2]})
+        if (Target.id == process.env.CLIENT_ID) return message.reply({embeds: [embed2]})
 
         const embed3 = new EmbedBuilder()
         .setTitle("> :x: Problema al cambiar los avisos :x:")
@@ -60,7 +44,7 @@ module.exports = {
         .setTimestamp(new Date())
         .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
 
-        if (Target.permissions.has(PermissionsBitField.Flags.Administrator)) return interaction.reply({embeds: [embed3]})
+        if (Target.permissions.has(PermissionsBitField.Flags.Administrator)) return message.reply({embeds: [embed3]})
 
         const embed4 = new EmbedBuilder()
         .setTitle("> :x: Problema al cambiar los avisos :x:")
@@ -71,17 +55,17 @@ module.exports = {
         .setTimestamp(new Date())
         .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
 
-    if (Reason.length >= 512) return interaction.reply({embeds: [embed4]})
+        if (Reason.length >= 512) return message.reply({embeds: [embed4]})
 
-    const userWarns = await db.get(`warnings_${interaction.guild.id}_${Target.id}`)
+        const userWarns = await db.get(`warnings_${message.guild.id}_${Target.id}`)
 
-    if (userWarns == undefined || userWarns == null || userWarns == NaN) {
-        await db.set(`warnings_${interaction.guild.id}_${Target.id}`, 0)
-    }
+        if (userWarns == undefined || userWarns == null || userWarns == NaN) {
+            await db.set(`warnings_${message.guild.id}_${Target.id}`, 0)
+        }
 
-    await db.set(`warnings_${interaction.guild.id}_${Target.id}`, Amount);
-
-    const embed5 = new EmbedBuilder()
+        await db.set(`warnings_${message.guild.id}_${Target.id}`, Amount);
+        
+        const embed5 = new EmbedBuilder()
         .setTitle("> :white_check_mark: ¡Se ha cambiado los avisos exitosamente!")
         .addFields(
             {
@@ -92,7 +76,7 @@ module.exports = {
 
             {
                 name: 'Información de la edición',
-                value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Warns actuales:** ${await db.get(`warnings_${interaction.guild.id}_${Target.id}`)}`,
+                value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Warns actuales:** ${await db.get(`warnings_${message.guild.id}_${Target.id}`)}`,
                 inline: false
             }
         )
@@ -104,7 +88,7 @@ module.exports = {
         
     const embed6 = new EmbedBuilder()
         .setTitle("> :x: ¡Te han cambiado los avisos!")
-        .setDescription(`<:flecha:1027368636572237915> ¡Te han cambiado los avisos en el servidor ${interaction.guild.name}!`)
+        .setDescription(`<:flecha:1027368636572237915> ¡Te han cambiado los avisos en el servidor ${message.guild.name}!`)
         .addFields(
             {
                 name: "**Usuario**",
@@ -114,7 +98,7 @@ module.exports = {
 
             {
                 name: '**Información del baneo:**',
-                value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Warns actuales:** ${await db.get(`warnings_${interaction.guild.id}_${Target.id}`)}`,
+                value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Warns actuales:** ${await db.get(`warnings_${message.guild.id}_${Target.id}`)}`,
                 inline: true
             }
         )
@@ -148,16 +132,16 @@ module.exports = {
 
         Target.send({embed: [embed6]}).catch(error => {console.log(error.stack)})
 
-        if (await db.get(`warnings_${interaction.guild.id}_${Target.id}`) >= 3) {
-            interaction.reply({embeds: [embed7]})
+        if (await db.get(`warnings_${message.guild.id}_${Target.id}`) >= 3) {
+            message.reply({embeds: [embed7]})
 
             Target.ban({
                 days: 7,
                 reason: '3 warns.'
             })
         } else {
-            interaction.reply({embeds: [embed5  ]})
+            message.reply({embeds: [embed5  ]})
         }
-        
+
     }
 }

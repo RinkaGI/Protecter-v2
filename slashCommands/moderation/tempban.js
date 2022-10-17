@@ -1,63 +1,78 @@
-const { ApplicationCommandOptionType, EmbedBuilder, PermissionsBitField } = require('discord.js');
-const db = require('../../database');
+const { Application, ApplicationCommandType, ApplicationCommandOptionType, messageLink } = require("discord.js");
+const ms = require("ms");
 
 module.exports = {
-    name: 'warn',
-    description: '¡Avisa a una persona! En caso de que este sea el tercer aviso será baneado.',
+    name: 'temp_ban',
+    description: '¡Banea a un usuario por un tiempo determinado!',
     cooldown: 1000,
+    type: ApplicationCommandType.ChatInput,
     default_member_permissions: 'BanMembers',
-
+    
     options: [
         {
-            name: 'usuario', description: '¿A quién quieres warnear?',
+            name: "usuario", description: "¿A quién quieres banear?",
             type: ApplicationCommandOptionType.User, required: true
         },
 
         {
-            name: 'razón', description: '¿Por qué le quieres warnear?',
+            name: "tiempo", description: "¿Por cuánto tiempo quieres banearle?",
+            type: ApplicationCommandOptionType.String, required: true
+        },
+
+        {
+            name: "razón", description: "¿Por qué quieres banearle?",
             type: ApplicationCommandOptionType.String, required: false
         }
     ],
 
-    run: async (client, interaction) => {
-        const Target = interaction.options.getMember('usuario');
-        const Reason = interaction.options.getString('razón') || 'Mal comportamiento'
+    run: async(client, interaction) => {
+        const Target = interaction.options.getMember("usuario");
+        const Time = interaction.options.getString("tiempo");
+        const Reason = interaction.options.getString("razón");
 
         const embed1 = new EmbedBuilder()
-            .setTitle("> :x: Problema al warnear :x:")
-            .setDescription(`<:flecha:1027368636572237915> Al parecer, admin, no puedes warnearte a ti mismo.`)
-            .setColor(0x5A9EC9)
-            .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
-            .setFooter({text: "Protecter v2 | ¡Lo mejor para tu seguridad!"})
-            .setTimestamp(new Date())
-            .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
+        .setTitle("> :x: Problema al banear :x:")
+        .setDescription(`<:flecha:1027368636572237915> Al parecer, admin, no puedes banearte a ti mismo.`)
+        .setColor(0x5A9EC9)
+        .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
+        .setFooter({text: "Protecter v2 | ¡Lo mejor para tu seguridad!"})
+        .setTimestamp(new Date())
+        .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
 
-        if (Target.id == interaction.member.id) return interaction.reply({embeds: [embed1]})
+    if (Target.id === interaction.member.id)
+    return interaction.reply({embeds: [
+        embed1
+    ]})
 
-        const embed2 = new EmbedBuilder()
-        .setTitle("> :x: Problema al warnear :x:")
-        .setDescription(`<:flecha:1027368636572237915> Al parecer, admin, no puedes warnearme.`)
+
+    const embed2 = new EmbedBuilder()
+        .setTitle("> :x: Problema al banear :x:")
+        .setDescription(`<:flecha:1027368636572237915> Al parecer, admin, no puedes banearme.`)
         .setColor(0x5A9EC9)
         .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
         .setFooter({text: "Protecter v2 | ¡Lo mejor para tu seguridad!"})
         .setTimestamp(new Date())
         .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
     
-        if (Target.id == process.env.CLIENT_ID) return interaction.reply({embeds: [embed2]})
+    if (Target.id == process.env.CLIENT_ID)
+        return interaction.reply({embeds: [embed2]})
 
-        const embed3 = new EmbedBuilder()
-        .setTitle("> :x: Problema al warnear :x:")
-        .setDescription(`<:flecha:1027368636572237915> ¡No se puede warnear a un admin!`)
+
+    const embed3 = new EmbedBuilder()
+        .setTitle("> :x: Problema al banear :x:")
+        .setDescription(`<:flecha:1027368636572237915> ¡No se puede banear a un admin!`)
         .setColor(0x5A9EC9)
         .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
         .setFooter({text: "Protecter v2 | ¡Lo mejor para tu seguridad!"})
         .setTimestamp(new Date())
         .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
 
-        if (Target.permissions.has(PermissionsBitField.Flags.Administrator)) return interaction.reply({embeds: [embed3]})
+    if (Target.permissions.has(PermissionsBitField.Flags.Administrator)) 
+        return interaction.reply({embeds: [embed3]})
 
-        const embed4 = new EmbedBuilder()
-        .setTitle("> :x: Problema al warnear :x:")
+
+    const embed4 = new EmbedBuilder()
+        .setTitle("> :x: Problema al banear :x:")
         .setDescription(`<:flecha:1027368636572237915> La razón no puede superar los 512 carácteres.`)
         .setColor(0x5A9EC9)
         .setAuthor({name: "Protecter v2", iconURL: "https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png"})
@@ -65,18 +80,11 @@ module.exports = {
         .setTimestamp(new Date())
         .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
 
-    if (Reason.length >= 512) return interaction.reply({embeds: [embed4]})
-
-    const userWarns = await db.get(`warnings_${interaction.guild.id}_${Target.id}`)
-
-    if (userWarns == undefined || userWarns == null || userWarns == NaN) {
-        await db.set(`warnings_${interaction.guild.id}_${Target.id}`, 0)
-    }
-
-    await db.add(`warnings_${interaction.guild.id}_${Target.id}`, 1);
+    if (Reason.length >= 512)
+        return interaction.reply({embeds: [embed4]})
 
     const embed5 = new EmbedBuilder()
-        .setTitle("> :white_check_mark: ¡Se ha warneado exitosamente!")
+        .setTitle("> :white_check_mark: ¡Se ha baneado exitosamente!")
         .addFields(
             {
                 name: "Usuario",
@@ -86,7 +94,7 @@ module.exports = {
 
             {
                 name: 'Información del baneo',
-                value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Warns actuales:** ${await db.get(`warnings_${interaction.guild.id}_${Target.id}`)}`,
+                value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Mensajes borrados desde los últimos:** ${AmountStr} días.`,
                 inline: false
             }
         )
@@ -98,8 +106,8 @@ module.exports = {
         
 
     const embed6 = new EmbedBuilder()
-        .setTitle("> :x: ¡Has sido warneado!")
-        .setDescription(`<:flecha:1027368636572237915> ¡Has sido warneado en el servidor ${interaction.guild.name}!`)
+        .setTitle("> :x: ¡Has sido baneado!")
+        .setDescription(`<:flecha:1027368636572237915> ¡Has sido baneado del servidor ${interaction.guild.name}!`)
         .addFields(
             {
                 name: "**Usuario**",
@@ -109,7 +117,7 @@ module.exports = {
 
             {
                 name: '**Información del baneo:**',
-                value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Warns actuales:** ${await db.get(`warnings_${interaction.guild.id}_${Target.id}`)}`,
+                value: `<:flecha:1027368636572237915> **Razón:** ${Reason} \n <:flecha:1027368636572237915> **Mensajes borrados desde los últimos:** ${AmountStr} días.`,
                 inline: true
             }
         )
@@ -120,8 +128,8 @@ module.exports = {
         .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
 
         const embed7 = new EmbedBuilder()
-        .setTitle(`:x: Se ha baneado a ${Target.user.username}`)
-        .setDescription(`<:flecha:1027368636572237915>  El usuario ${Target.user.username} ha llegado a los 3 warns!`)
+        .setTitle("> :x: ¡Has sido desbaneado!")
+        .setDescription(`<:flecha:1027368636572237915> ¡Has sido desbaneado del servidor ${interaction.guild.name}!`)
         .addFields(
             {
                 name: "**Usuario**",
@@ -131,7 +139,7 @@ module.exports = {
 
             {
                 name: '**Información del baneo:**',
-                value: `<:flecha:1027368636572237915> **Razón:** Ha llegado a 3 warns \n <:flecha:1027368636572237915> **Razón del ultimo warn:** ${Reason}`,
+                value: `<:flecha:1027368636572237915> **Razón:** Tu ban temporal se ha despasado. \n <:flecha:1027368636572237915> **Mensajes borrados desde los últimos:** ${AmountStr} días.`,
                 inline: true
             }
         )
@@ -141,17 +149,22 @@ module.exports = {
         .setTimestamp(new Date())
         .setThumbnail("https://cdn.discordapp.com/attachments/965019683872964608/965020564001521764/unknown.png")
 
-        Target.send({embed: [embed6]}).catch(error => {console.log(error.stack)})
+    Target.send({embed: [embed6]}).catch(error => {console.log(error.stack)})
 
-        if (await db.get(`warnings_${interaction.guild.id}_${Target.id}`) >= 3) {
-            interaction.reply({embeds: [embed7]})
+    Target.ban({
+        days: 7,
+        reason: Reason
+    })
 
-            Target.ban({
-                days: 7,
-                reason: '3 warns.'
-            })
-        } else {
-            interaction.reply({embeds: [embed5]})}
-        
+    setTimeout(async function() {
+        await interaction.guild.fetchBans().then(async bans => {
+            if (bans.size == 0) return interaction.reply(`:x: Este servidor no tiene ningún ban`)
+            let bannedUser = bans.find(b => b.user.id == Target.id);
+            if (!bannedUser) return Target.send({embed: [embed7]}).catch(error => {console.log(error.stack)})
+            await interaction.guild.members.unban(bannedUser.user, 'Tiempo despasado').catch(err => {console.log(err.stack)})
+        });
+    }, ms(Time))
+    
+    interaction.reply({embeds: [embed5]})
     }
 }
